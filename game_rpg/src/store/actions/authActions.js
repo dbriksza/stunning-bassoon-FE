@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://alans-app.herokuapp.com";
+// const baseURL = "https://alans-app.herokuapp.com";
+const baseURL = "http://localhost:8000"
 
 export const LOGIN = "LOGIN";
 export const LOADING_USER = "LOADING_USER";

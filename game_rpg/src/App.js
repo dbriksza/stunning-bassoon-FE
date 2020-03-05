@@ -9,7 +9,7 @@ import Pusher from 'pusher-js';
 
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
-import Game from "./components/gameboard/Game";
+import Game from "./components/Game";
 import "./App.scss";
 
 const pusher = new Pusher('0805c1e228898d83231c', {
