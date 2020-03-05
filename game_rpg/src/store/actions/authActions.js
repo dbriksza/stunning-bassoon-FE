@@ -5,7 +5,7 @@ const baseURL = "https://alans-app.herokuapp.com";
 export const LOGIN = "LOGIN";
 export const LOADING_USER = "LOADING_USER";
 export const LOGIN_ERROR = "LOGIN_ERROR";
-export const LOGOOUT = "LOGOOUT";
+export const LOGOUT = "LOGOUT";
 export const GET_USER = "GET_USER";
 export const REGISER_ERROR = "REGISER_ERROR";
 export const USER_ERROR = "USER_ERROR";
@@ -22,6 +22,8 @@ export const doLogin = (user, history) => dispatch => {
     .then(response => {
       const { key } = response.data;
       localStorage.setItem("token", key);
+      // payload currently is the token being saved as userId at the moment
+      dispatch(updateAction(LOGIN, key));
       history.push("/game");
     })
     .catch(error => {
@@ -38,6 +40,7 @@ export const doRegister = (user, history) => dispatch => {
     .then(response => {
       const { key } = response.data;
       localStorage.setItem("token", key);
+      dispatch(updateAction(LOGIN, key));
       history.push("/game");
     })
     .catch(error => {
