@@ -28,6 +28,7 @@ const Register = props => {
       setRegisterForm({ error: "Please fill in all fields" });
     }
     setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
+    console.log(registerForm);
   };
 
   const registerSubmit = e => {
@@ -42,7 +43,8 @@ const Register = props => {
         password1: registerForm.password1,
         password2: registerForm.password2
       };
-      props.doRegister(credentials, this.props.history);
+      console.log(credentials);
+      props.doRegister(credentials, props.history);
       setRegisterForm(initialForm);
     } else {
       setRegisterForm({ error: "Please fill in all fields" });
@@ -53,14 +55,14 @@ const Register = props => {
     <StyledDiv>
       <Form onSubmit={e => registerSubmit(e)}>
         <FormGroup>
-          <Label for="email">Email</Label>
+          <Label for="username">Username</Label>
           <Input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="with a placeholder"
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
             onChange={e => handleChange(e)}
-            value={registerForm.username}
+            innerRef={registerForm.username}
           />
         </FormGroup>
         <FormGroup>
@@ -71,7 +73,7 @@ const Register = props => {
             id="password1"
             placeholder="Password"
             onChange={e => handleChange(e)}
-            value={registerForm.password1}
+            innerRef={registerForm.password1}
           />
         </FormGroup>
         <FormGroup>
@@ -82,22 +84,24 @@ const Register = props => {
             id="password2"
             placeholder="Confirm Password"
             onChange={e => handleChange(e)}
-            value={registerForm.password2}
+            innerRef={registerForm.password2}
           />
         </FormGroup>
         {props.registerError &&
           props.registerError.password2 &&
           props.registerError.password2.map(e => <p key={e}>{e}</p>)}
         {registerForm.error && <p>{registerForm.error}</p>}
-        <Button color="primary" onClick>
+        <Button color="primary">
           {props.loadingUser ? "Launching Game" : "Start Playing"}
         </Button>
-        <p>Already have an account?</p>
-        <Button color="link">
-          <Link to="/">Login Here</Link>
-        </Button>
+        <div>
+          <p>Already have an account?</p>
+          <Button color="link">
+            <Link to="/">Login Here</Link>
+          </Button>
+        </div>
       </Form>
-    </div>
+    </StyledDiv>
   );
 };
 
@@ -108,6 +112,37 @@ const StyledDiv = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
+
+  form {
+    border-radius: 1.25rem;
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    background-color: white;
+    min-width: 40%;
+    padding: 1rem;
+    border-radius;
+    
+    div:last-child {
+      display: flex;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+  }
+  button:nth-of-type(1) {
+    margin: 0 auto;
+    width: 60%;
+  }
+  p {
+    margin: 0;
+    min-width: 50%;
+    padding: 6px 0;
+    
+  }
 `;
 
 const mapStateToProps = state => {

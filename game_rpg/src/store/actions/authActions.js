@@ -7,7 +7,7 @@ export const LOADING_USER = "LOADING_USER";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 export const GET_USER = "GET_USER";
-export const REGISER_ERROR = "REGISER_ERROR";
+export const REGISTER_ERROR = "REGISTER_ERROR";
 export const USER_ERROR = "USER_ERROR";
 
 export const updateAction = (type, payload) => ({
@@ -45,7 +45,7 @@ export const doRegister = (user, history) => dispatch => {
     })
     .catch(error => {
       let errorMessage = error.response.data;
-      dispatch(updateAction(REGISER_ERROR, errorMessage));
+      dispatch(updateAction(REGISTER_ERROR, errorMessage));
     })
     .finally(() => dispatch(updateAction(LOADING_USER, false)));
 };
