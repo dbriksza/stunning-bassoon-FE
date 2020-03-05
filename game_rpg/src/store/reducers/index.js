@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
 import auth from './auth'
+import game from './game'
 
 const appReducer = combineReducers({
-    auth
+    auth, game
 })
 
 const rootReducer = (state, action) => {
