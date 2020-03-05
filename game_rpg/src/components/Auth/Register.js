@@ -138,10 +138,15 @@ const StyledDiv = styled.div`
     width: 60%;
   }
   p {
+    flex: 2;
     margin: 0;
     min-width: 50%;
     padding: 6px 0;
     
+  }
+  .btn.btn-link {
+    flex: 1;
+    padding: 6px 0;
   }
 `;
 
