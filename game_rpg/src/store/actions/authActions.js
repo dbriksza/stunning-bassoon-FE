@@ -46,3 +46,9 @@ export const doRegister = (user, history) => dispatch => {
     })
     .finally(() => dispatch(updateAction(LOADING_USER, false)));
 };
+
+export const doLogout = () => dispatch => {
+  localStorage.removeItem("token");
+  dispatch(updateAction(LOGOUT));
+  window.location.reload();
+};
