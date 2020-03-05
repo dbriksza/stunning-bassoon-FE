@@ -10,6 +10,7 @@
     "node-sass": "^4.13.1",
     "pusher-js": "^5.1.1",
     "bootstrap": "^4.4.1",
+    "http-proxy-middleware": "^1.0.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
@@ -41,5 +42,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://alans-app.herokuapp.com"
 }
