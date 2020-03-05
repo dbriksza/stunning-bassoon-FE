@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import styled from "styled-components";
 
 import { doRegister } from "../../store/actions/authActions";
+import backgroundImg from "../../assets/background-image.jpg";
 
 const initialForm = {
   username: "",
@@ -48,7 +50,7 @@ const Register = props => {
   };
 
   return (
-    <div>
+    <StyledDiv>
       <Form onSubmit={e => registerSubmit(e)}>
         <FormGroup>
           <Label for="email">Email</Label>
@@ -98,6 +100,15 @@ const Register = props => {
     </div>
   );
 };
+
+const StyledDiv = styled.div`
+  background-image: url(${backgroundImg});
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+`;
 
 const mapStateToProps = state => {
   return {
