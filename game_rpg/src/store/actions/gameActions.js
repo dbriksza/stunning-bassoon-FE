@@ -1,4 +1,4 @@
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { axiosWithAuth } from "../../util/axiosWithAuth";
 
 export const GET_BOARD_START = "GET_BOARD_START";
 export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
@@ -6,10 +6,10 @@ export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
 export const GAME_FAIL = "GAME_ERROR";
 
 
-export const startGame = () => dispatch => {
+export const getGame = () => dispatch => {
   dispatch({ type: GET_BOARD_START });
   axiosWithAuth()
-    .get(`/start`)
+    .get(`/get_game`)
     .then(res => {
       dispatch({ type: GET_BOARD_SUCCESS, payload: res.data });
     })
