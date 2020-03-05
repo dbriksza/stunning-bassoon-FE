@@ -9,6 +9,7 @@ import backgroundImg from "../../assets/background-image.jpg";
 
 const initialForm = {
   username: "",
+  email: "",
   password: "",
   error: ""
 };
@@ -17,7 +18,7 @@ const Login = props => {
   const [loginForm, setLoginForm] = useState(initialForm);
 
   const handleChange = e => {
-    if (loginForm.username && loginForm.password) {
+    if (loginForm.username && loginForm.email && loginForm.password) {
       setLoginForm({ ...loginForm, error: "" });
     } else {
       setLoginForm({ error: "Please fill in all fields" });
@@ -28,13 +29,14 @@ const Login = props => {
 
   const loginSubmit = e => {
     e.preventDefault();
-    if (loginForm.username && loginForm.password) {
+    if (loginForm.username && loginForm.email && loginForm.password) {
       const credentials = {
         username: loginForm.username,
+        email: loginForm.email,
         password: loginForm.password
       };
       console.log(credentials);
-      props.doRegister(credentials, props.history);
+      props.doLogin(credentials, props.history);
       setLoginForm(initialForm);
     } else {
       setLoginForm({ error: "Please fill in all fields" });
@@ -53,6 +55,17 @@ const Login = props => {
             placeholder="Username"
             onChange={e => handleChange(e)}
             innerRef={loginForm.username}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="email">Email</Label>
+          <Input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            onChange={e => handleChange(e)}
+            innerRef={loginForm.email}
           />
         </FormGroup>
         <FormGroup>
