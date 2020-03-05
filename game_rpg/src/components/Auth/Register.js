@@ -9,6 +9,7 @@ import backgroundImg from "../../assets/background-image.jpg";
 
 const initialForm = {
   username: "",
+  email: "",
   password1: "",
   password2: "",
   error: ""
@@ -20,6 +21,7 @@ const Register = props => {
   const handleChange = e => {
     if (
       registerForm.username &&
+      registerForm.email &&
       registerForm.password1 &&
       registerForm.password2
     ) {
@@ -35,11 +37,13 @@ const Register = props => {
     e.preventDefault();
     if (
       registerForm.username &&
+      registerForm.email &&
       registerForm.password1 &&
       registerForm.password2
     ) {
       const credentials = {
         username: registerForm.username,
+        email: registerForm.email,
         password1: registerForm.password1,
         password2: registerForm.password2
       };
@@ -63,6 +67,17 @@ const Register = props => {
             placeholder="Username"
             onChange={e => handleChange(e)}
             innerRef={registerForm.username}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="email">Email</Label>
+          <Input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            onChange={e => handleChange(e)}
+            innerRef={registerForm.email}
           />
         </FormGroup>
         <FormGroup>

@@ -36,7 +36,7 @@ export const doLogin = (user, history) => dispatch => {
 export const doRegister = (user, history) => dispatch => {
   dispatch(updateAction(LOADING_USER, true));
   axios
-    .post(`${baseURL}/api/registration`, user)
+    .post(`${baseURL}/api/registration/`, user)
     .then(response => {
       const { key } = response.data;
       localStorage.setItem("token", key);
