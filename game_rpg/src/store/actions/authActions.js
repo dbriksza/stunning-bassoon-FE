@@ -5,6 +5,10 @@ const baseURL = "https://alans-app.herokuapp.com";
 export const LOGIN = "LOGIN";
 export const LOADING_USER = "LOADING_USER";
 export const LOGIN_ERROR = "LOGIN_ERROR";
+export const LOGOOUT = "LOGOOUT";
+export const GET_USER = "GET_USER";
+export const REGISER_ERROR = "REGISER_ERROR";
+export const USER_ERROR = "USER_ERROR";
 
 export const updateAction = (type, payload) => ({
   type,
