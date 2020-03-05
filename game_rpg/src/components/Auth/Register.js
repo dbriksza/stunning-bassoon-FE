@@ -28,7 +28,8 @@ const Register = props => {
     setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
   };
 
-  const register = () => {
+  const registerSubmit = e => {
+    e.preventDefault();
     if (
       registerForm.username &&
       registerForm.password1 &&
@@ -48,7 +49,7 @@ const Register = props => {
 
   return (
     <div>
-      <Form>
+      <Form onSubmit={e => registerSubmit(e)}>
         <FormGroup>
           <Label for="email">Email</Label>
           <Input
@@ -56,6 +57,8 @@ const Register = props => {
             name="email"
             id="email"
             placeholder="with a placeholder"
+            onChange={e => handleChange(e)}
+            value={registerForm.username}
           />
         </FormGroup>
         <FormGroup>
@@ -65,6 +68,8 @@ const Register = props => {
             name="password1"
             id="password1"
             placeholder="Password"
+            onChange={e => handleChange(e)}
+            value={registerForm.password1}
           />
         </FormGroup>
         <FormGroup>
@@ -74,8 +79,21 @@ const Register = props => {
             name="password2"
             id="password2"
             placeholder="Confirm Password"
+            onChange={e => handleChange(e)}
+            value={registerForm.password2}
           />
         </FormGroup>
+        {props.registerError &&
+          props.registerError.password2 &&
+          props.registerError.password2.map(e => <p key={e}>{e}</p>)}
+        {registerForm.error && <p>{registerForm.error}</p>}
+        <Button color="primary" onClick>
+          {props.loadingUser ? "Launching Game" : "Start Playing"}
+        </Button>
+        <p>Already have an account?</p>
+        <Button color="link">
+          <Link to="/">Login Here</Link>
+        </Button>
       </Form>
     </div>
   );
