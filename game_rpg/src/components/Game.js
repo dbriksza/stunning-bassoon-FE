@@ -1,7 +1,7 @@
 import React, { useEffect} from 'react';
 import { connect } from "react-redux";
-import { getGame } from "../../store/actions/gameActions";
-import Board from "./Board"
+import { getGame } from "../store/actions/gameActions";
+import Board from "./Gameboard/Board"
 
 function Game(props) {
   const { getGame } = props;
@@ -19,7 +19,9 @@ function Game(props) {
   if (props.game.isSuccessful){
     return(
       <div className="game">
+        {/* <Player /> */}
         <Board blueprint={props.game.board} />
+        {/* <Controls /> */}
       </div>
     )
 
