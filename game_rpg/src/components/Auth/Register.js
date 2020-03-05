@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 import { doRegister } from "../../store/actions/authActions";
 
@@ -47,9 +48,44 @@ const Register = props => {
 
   return (
     <div>
-      <p>something</p>
+      <Form>
+        <FormGroup>
+          <Label for="email">Email</Label>
+          <Input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="with a placeholder"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="password1">Password</Label>
+          <Input
+            type="password1"
+            name="password1"
+            id="password1"
+            placeholder="Password"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="password2">Confirm Password</Label>
+          <Input
+            type="password2"
+            name="password2"
+            id="password2"
+            placeholder="Confirm Password"
+          />
+        </FormGroup>
+      </Form>
     </div>
   );
 };
 
-export default Register;
+const mapStateToProps = state => {
+  return {
+    loadingUser: state.auth.loadingUser,
+    register: state.auth.registerError
+  };
+};
+
+export default connect(mapStateToProps, { doRegister })(Register);
