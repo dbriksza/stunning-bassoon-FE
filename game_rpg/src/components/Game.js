@@ -43,6 +43,7 @@ function Game(props) {
     });
     
     playerChannel.bind('update-world', function(data) {
+      pushPlayerChange(data);
       alert(JSON.stringify(data));
     });
     
@@ -50,7 +51,7 @@ function Game(props) {
     
     boardChannel.bind('start-game', function(data) {
       pushBoardStart(data);
-      alert(JSON.stringify(data));
+      // alert(JSON.stringify(data));
     });
     
     boardChannel.bind('update-world', function(data) {

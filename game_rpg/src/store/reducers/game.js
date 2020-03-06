@@ -137,7 +137,7 @@ function gameReducer(state = initialState, action) {
         ...state,
         gameData: {
           ...state.gameData,
-          board: action.payload.board
+          board: action.payload
         }
       }
     
@@ -160,15 +160,6 @@ function gameReducer(state = initialState, action) {
         isSuccessful: true,
         isError: false,
         errorMessage: null
-      }
-
-    // updates from player_updates pusher channel
-    case(types.BOARD_UPDATE):
-      return {
-        boardData: {
-          ...state.boardData,
-          board: action.payload.board
-        }
       }
     
       // Roll die endpoint causes pusher update to players_channel
