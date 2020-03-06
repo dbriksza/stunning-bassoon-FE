@@ -4,52 +4,87 @@ import React from "react";
 import { Button, ButtonGroup } from "reactstrap";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { movePlayer } from "../store/actions/gameActions";
+import {
+  movePlayer,
+  rollDie,
+  joinGame,
+  leaveGame
+} from "../../store/actions/gameActions";
 
 const Controls = props => {
-  const move = direction => {
-    //takes board, playerpostion and direction
-    movePlayer(props.board, "playerposition", direction);
-  };
-
+  console.log(props.currentPlayer, props.username);
   return (
     <StyledControls>
       <p>Controls</p>
       <section>
         <div className="direction-container">
           <div>
-            <Button onClick={() => move("n")} color="secondary">
+            <Button
+              disabled={!props.currentPlayer == props.username}
+              onClick={() => props.movePlayer("w")}
+              color="secondary"
+            >
               N
             </Button>
           </div>
           <div className="west-east">
             <div>
-              <Button onClick={() => move("w")} color="secondary">
+              <Button
+                disabled={!props.currentPlayer == props.username}
+                onClick={() => props.movePlayer("a")}
+                color="secondary"
+              >
                 W
               </Button>
             </div>
             <div>
-              <Button onClick={() => move("e")} color="secondary">
+              <Button
+                disabled={!props.currentPlayer == props.username}
+                onClick={() => props.movePlayer("d")}
+                color="secondary"
+              >
                 E
               </Button>
             </div>
           </div>
           <div>
-            <Button onClick={() => move("s")} color="secondary">
+            <Button
+              disabled={!props.currentPlayer == props.username}
+              onClick={() => props.movePlayer("s")}
+              color="secondary"
+            >
               S
             </Button>
           </div>
         </div>
         <div>
-          <Button size="sm" color="success">
+          <Button
+            size="sm"
+            color="success"
+            disabled={!props.currentPlayer == props.username}
+            onClick={e => {
+              e.preventDefault();
+              props.rollDie();
+            }}
+          >
             Roll Dice
           </Button>
           <div>
             <ButtonGroup>
-              <Button size="sm" outline color="primary">
+              <Button
+                size="sm"
+                outline
+                color="primary"
+                onClick={() => props.joinGame()}
+              >
                 Join
               </Button>
-              <Button size="sm" outline color="danger">
+              <Button
+                size="sm"
+                outline
+                color="danger"
+                onClick={() => props.leaveGame()}
+              >
                 Exit
               </Button>
             </ButtonGroup>
@@ -110,8 +145,15 @@ const StyledControls = styled.div`
 
 const mapStateToProps = state => {
   return {
-    board: state.game.board
+    board: state.game.board,
+    currentPlayer: state.game.playerData.current_player,
+    username: state.game.username
   };
 };
 
-export default connect(mapStateToProps, { movePlayer })(Controls);
+export default connect(mapStateToProps, {
+  movePlayer,
+  rollDie,
+  joinGame,
+  leaveGame
+})(Controls);

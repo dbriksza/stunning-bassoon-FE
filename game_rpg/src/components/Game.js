@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart, pushBoardChange } from "../store/actions/gameActions";
+import {
+  getGame,
+  pushPlayerChange,
+  pushPlayerStart,
+  pushBoardStart,
+  pushBoardChange
+} from "../store/actions/gameActions";
 // pusher
 import Pusher from "pusher-js";
 // components
@@ -12,75 +18,75 @@ import styled from "styled-components";
 import backgroundImg from "../assets/background-image.jpg";
 
 // initialize pusher
-const pusher = new Pusher('0805c1e228898d83231c', {
-  cluster: 'us2',
+const pusher = new Pusher("0805c1e228898d83231c", {
+  cluster: "us2",
   forceTLS: true
 });
-const playerChannel = pusher.subscribe('player-channel');
-const boardChannel = pusher.subscribe('board-channel');
+const playerChannel = pusher.subscribe("player-channel");
+const boardChannel = pusher.subscribe("board-channel");
 
 // Game component
 function Game(props) {
-  const { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart, pushBoardChange } = props;
+  const {
+    getGame,
+    pushPlayerChange,
+    pushPlayerStart,
+    pushBoardStart,
+    pushBoardChange
+  } = props;
 
   useEffect(() => {
     getGame();
     // player pusher updates
-    playerChannel.bind('player-joined', function(data) {
+    playerChannel.bind("player-joined", function(data) {
       pushPlayerChange(data);
       // alert(JSON.stringify(data));
     });
-    
-    playerChannel.bind('player-left', function(data) {
+
+    playerChannel.bind("player-left", function(data) {
       pushPlayerChange(data);
       // alert(JSON.stringify(data));
     });
-    
-    playerChannel.bind('start-game', function(data) {
+
+    playerChannel.bind("start-game", function(data) {
       pushPlayerStart(data);
       // alert(JSON.stringify(data));
     });
-    
-    playerChannel.bind('update-world', function(data) {
+
+    playerChannel.bind("update-world", function(data) {
       pushPlayerChange(data);
       alert(JSON.stringify(data));
     });
-    
+
     // board pusher updates
-    
-    boardChannel.bind('start-game', function(data) {
+
+    boardChannel.bind("start-game", function(data) {
       pushBoardStart(data);
       // alert(JSON.stringify(data));
     });
-    
-    boardChannel.bind('update-world', function(data) {
+
+    boardChannel.bind("update-world", function(data) {
       pushBoardChange(data);
       alert(JSON.stringify(data));
     });
-    
-    boardChannel.bind('end-game', function(data) {
+
+    boardChannel.bind("end-game", function(data) {
       alert(JSON.stringify(data));
     });
-
   }, [getGame, pushPlayerChange, pushPlayerStart, pushBoardStart]);
 
-  if (props.game.isLoading) {
+  if (!props.game.gameData.blueprint) {
     return <h2>Loading the game...</h2>;
   }
-
-  if (props.game.isSuccessful) {
-    return (
-      <StyledDiv>
-        <div className="game">
-          <Players playerData={props.game.playerData} />
-          <Board gameData={props.game.gameData} />
-          <Controls />
-        </div>
-      </StyledDiv>
-    );
-  } else {
-    return <p>ERROR</p>;
-  }
+  return (
+    <StyledDiv>
+      <div className="game">
+        <Players playerData={props.game.playerData} />
+        <Board gameData={props.game.gameData} />
+        <Controls />
+      </div>
+    </StyledDiv>
+  );
 }
 
 const StyledDiv = styled.div`
@@ -116,7 +122,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart, pushBoardChange }
-)(Game)
+export default connect(mapStateToProps, {
+  getGame,
+  pushPlayerChange,
+  pushPlayerStart,
+  pushBoardStart,
+  pushBoardChange
+})(Game);

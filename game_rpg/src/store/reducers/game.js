@@ -51,25 +51,24 @@ const initialState = {
   isLoading: false,
   isSuccessful: false,
   isError: false,
-  errorMessage: null
-}
-
-
+  errorMessage: null,
+  username: null
+};
 
 function gameReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     // generic HTTP request start handlers
-    case (types.START_REQUEST):
+    case types.START_REQUEST:
       return {
         ...state,
         isLoading: true,
         isSuccessful: false,
         isError: false,
         errorMessage: null
-      }
+      };
 
     // Get blueprint (may be deprecated)
-    case (types.GET_BOARD_SUCCESS):
+    case types.GET_BOARD_SUCCESS:
       return {
         ...state,
         gameData: {
@@ -80,49 +79,51 @@ function gameReducer(state = initialState, action) {
         isSuccessful: true,
         isError: false,
         errorMessage: null
-      }
+      };
 
     // PLAYER JOIN/LEAVE ACTION HANDLERS
     // join http handler
-    case (types.JOIN_GAME_SUCCESS):
+    case types.JOIN_GAME_SUCCESS:
+      console.log(state);
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        isError: false,
+        errorMessage: null,
+        username: action.payload.Name
+      };
+    // leave endpoint handler
+    case types.LEAVE_GAME_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isSuccessful: true,
         isError: false,
         errorMessage: null
-      }
-    // leave endpoint handler 
-    case(types.LEAVE_GAME_SUCCESS):
-      return {
-        ...state,
-        isLoading: false,
-        isSuccessful: true,
-        isError: false,
-        errorMessage: null
-      }
+      };
     // pusher handler for player array updates
-    case (types.PUSH_PLAYER_CHANGE):
+    case types.PUSH_PLAYER_CHANGE:
       return {
         ...state,
         playerData: {
           ...state.playerData,
           players: action.payload.players
         }
-      }
-    
+      };
+
     // START GAME ACTION HANDLERS
     // http start game endpoint handlers
-    case(types.START_GAME_SUCCESS):
+    case types.START_GAME_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isSuccessful: true,
         isError: false,
         errorMessage: null
-      }
+      };
     // pusher player channel start game
-    case(types.PLAYER_START_GAME):
+    case types.PLAYER_START_GAME:
       return {
         ...state,
         playerData: {
@@ -130,51 +131,50 @@ function gameReducer(state = initialState, action) {
           current_player: action.payload.current_player,
           players: action.payload.players
         }
-      }
+      };
     // pusher board channel start game
-    case(types.BOARD_START_GAME):
+    case types.BOARD_START_GAME:
       return {
         ...state,
         gameData: {
           ...state.gameData,
           board: action.payload
         }
-      }
-    
+      };
+
     // GAME UPDATE ACTION HANDLERS
     // http roll die
     // roll die update causes pusher update to players_channel
-    case(types.ROLL_DIE_SUCCESS):
+    case types.ROLL_DIE_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isSuccessful: true,
         isError: false,
         errorMessage: null
-      }
+      };
     // http move player
     // Move player endpoint causes pusher update to players_channel and board_channel
-    case(types.MOVE_PLAYER_SUCCESS):
+    case types.MOVE_PLAYER_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isSuccessful: true,
         isError: false,
         errorMessage: null
-      }
+      };
     // pusher update gameboard
-    case(types.PUSH_BOARD_CHANGE):
+    case types.PUSH_BOARD_CHANGE:
       return {
         ...state,
         gameData: {
           ...state.gameData,
           board: action.payload
         }
-      }
+      };
 
-
-    // generic http failure handler for error message  
-    case (types.GAME_FAIL):
+    // generic http failure handler for error message
+    case types.GAME_FAIL:
       return {
         ...state,
         isLoading: false,
