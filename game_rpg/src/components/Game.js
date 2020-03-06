@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart } from "../store/actions/gameActions";
+import { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart, pushBoardChange } from "../store/actions/gameActions";
 // pusher
 import Pusher from "pusher-js";
 // components
@@ -21,7 +21,7 @@ const boardChannel = pusher.subscribe('board-channel');
 
 // Game component
 function Game(props) {
-  const { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart } = props;
+  const { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart, pushBoardChange } = props;
 
   useEffect(() => {
     getGame();
@@ -54,6 +54,7 @@ function Game(props) {
     });
     
     boardChannel.bind('update-world', function(data) {
+      pushBoardChange(data);
       alert(JSON.stringify(data));
     });
     
@@ -107,7 +108,6 @@ const mapStateToProps = state => {
     game: {
       gameData: state.game.gameData,
       playerData: state.game.playerData,
-      board: state.game.board,
       isSuccessful: state.game.isSuccessful,
       isLoading: state.game.isLoading,
       isError: state.game.isError,
@@ -118,5 +118,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart }
+  { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart, pushBoardChange }
 )(Game)

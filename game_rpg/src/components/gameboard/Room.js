@@ -3,17 +3,29 @@ import styled from "styled-components";
 
 export default function Room(props) {
   // value is 0 or 1 for obstacle or room
-  const {value} = props;
+  const {value, room} = props;
   const className =
     "cell" +
     // if value is 0 add obstacle class
     (value === 0 ? " obstacle" : "")
 
-  return(
-    <StyledDiv>
-      <div className={className}></div>      
-    </StyledDiv>
-  )
+  if(room){
+    return(
+      <StyledDiv>
+        <div className={className}>
+          {room ? room.point_value : null}  
+        </div>
+      </StyledDiv>
+    )
+  } else {
+    return(
+      <StyledDiv>
+        <div className={className}>
+        </div>
+      </StyledDiv>
+    )
+
+  }
 }
 
 const StyledDiv = styled.div`
@@ -37,5 +49,11 @@ const StyledDiv = styled.div`
 
   .obstacle {
     background: #333333;
+  }
+
+  .player {
+    position: absolute;
+    color: red;
+    font-weight: bold;
   }
 `;
