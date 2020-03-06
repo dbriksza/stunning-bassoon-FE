@@ -3,26 +3,41 @@
 import React from "react";
 import { Button, ButtonGroup } from "reactstrap";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { movePlayer } from "../store/actions/gameActions";
 
 const Controls = props => {
+  const move = direction => {
+    //takes board, playerpostion and direction
+    movePlayer(props.board, "playerposition", direction);
+  };
+
   return (
     <StyledControls>
       <p>Controls</p>
       <section>
         <div className="direction-container">
           <div>
-            <Button color="secondary">N</Button>
+            <Button onClick={() => move("n")} color="secondary">
+              N
+            </Button>
           </div>
           <div className="west-east">
             <div>
-              <Button color="secondary">W</Button>
+              <Button onClick={() => move("w")} color="secondary">
+                W
+              </Button>
             </div>
             <div>
-              <Button color="secondary">E</Button>
+              <Button onClick={() => move("e")} color="secondary">
+                E
+              </Button>
             </div>
           </div>
           <div>
-            <Button color="secondary">S</Button>
+            <Button onClick={() => move("s")} color="secondary">
+              S
+            </Button>
           </div>
         </div>
         <div>
@@ -58,6 +73,8 @@ const StyledControls = styled.div`
   width: 60%;
 
   section {
+    border-top: 1px solid lightgrey;
+    padding-top: 5px;
     display: flex;
     align-items: center;
     min-width: 100%;
@@ -91,4 +108,10 @@ const StyledControls = styled.div`
   }
 `;
 
-export default Controls;
+const mapStateToProps = state => {
+  return {
+    board: state.game.board
+  };
+};
+
+export default connect(mapStateToProps, { movePlayer })(Controls);

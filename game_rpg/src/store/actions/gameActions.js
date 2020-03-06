@@ -28,7 +28,7 @@ export const getGame = () => dispatch => {
 
 export const movePlayer = (board, playerPosition, direction) => dispatch => {
   const reqBody = { direction: direction };
-  //need tobe synced with backend
+  //need to be synced with backend
   axiosWithAuth()
     .post(`/api/adv/move`, reqBody)
     .then(response => {
