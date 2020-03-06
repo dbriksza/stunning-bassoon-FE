@@ -6,6 +6,14 @@ const Controls = props => {
   return (
     <div>
       <div>Controls</div>
+      <div>
+        <div>N</div>
+        <div>
+          <div>E</div>
+          <div>W</div>
+        </div>
+        <div>S</div>
+      </div>
     </div>
   );
 };

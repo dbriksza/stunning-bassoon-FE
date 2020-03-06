@@ -30,9 +30,11 @@ export const movePlayer = (board, playerPosition, direction) => dispatch => {
   const reqBody = { direction: direction };
   //need tobe synced with backend
   axiosWithAuth()
-    .post(`/move/`, reqBody)
+    .post(`/api/adv/move`, reqBody)
     .then(response => {
-      dispatch(updateAction(MOVE_PLAYER, board, res.title, playerPosition));
+      dispatch(
+        updateAction(MOVE_PLAYER, board, response.title, playerPosition)
+      );
     })
     .catch(err => {
       console.log(err);
