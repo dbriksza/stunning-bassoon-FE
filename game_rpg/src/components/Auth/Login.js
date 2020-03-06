@@ -113,7 +113,6 @@ const StyledDiv = styled.div`
     background-color: white;
     min-width: 40%;
     padding: 1rem;
-    border-radius;
     
     div:last-child {
       display: flex;
