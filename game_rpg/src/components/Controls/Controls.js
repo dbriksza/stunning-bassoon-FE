@@ -21,7 +21,7 @@ const Controls = props => {
           <div>
             <Button
               disabled={!props.currentPlayer == props.username}
-              onClick={() => props.movePlayer("n")}
+              onClick={() => props.movePlayer("w")}
               color="secondary"
             >
               N
@@ -31,7 +31,7 @@ const Controls = props => {
             <div>
               <Button
                 disabled={!props.currentPlayer == props.username}
-                onClick={() => props.movePlayer("w")}
+                onClick={() => props.movePlayer("a")}
                 color="secondary"
               >
                 W
@@ -40,7 +40,7 @@ const Controls = props => {
             <div>
               <Button
                 disabled={!props.currentPlayer == props.username}
-                onClick={() => props.movePlayer("e")}
+                onClick={() => props.movePlayer("d")}
                 color="secondary"
               >
                 E
