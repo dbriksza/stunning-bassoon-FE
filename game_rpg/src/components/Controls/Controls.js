@@ -4,52 +4,69 @@ import React from "react";
 import { Button, ButtonGroup } from "reactstrap";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { movePlayer } from "../store/actions/gameActions";
+import {
+  movePlayer,
+  rollDie,
+  joinGame,
+  leaveGame
+} from "../../store/actions/gameActions";
 
 const Controls = props => {
-  const move = direction => {
-    //takes board, playerpostion and direction
-    movePlayer(props.board, "playerposition", direction);
-  };
-
   return (
     <StyledControls>
       <p>Controls</p>
       <section>
         <div className="direction-container">
           <div>
-            <Button onClick={() => move("n")} color="secondary">
+            <Button onClick={() => props.movePlayer("n")} color="secondary">
               N
             </Button>
           </div>
           <div className="west-east">
             <div>
-              <Button onClick={() => move("w")} color="secondary">
+              <Button onClick={() => props.movePlayer("w")} color="secondary">
                 W
               </Button>
             </div>
             <div>
-              <Button onClick={() => move("e")} color="secondary">
+              <Button onClick={() => props.movePlayer("e")} color="secondary">
                 E
               </Button>
             </div>
           </div>
           <div>
-            <Button onClick={() => move("s")} color="secondary">
+            <Button onClick={() => props.movePlayer("s")} color="secondary">
               S
             </Button>
           </div>
         </div>
         <div>
-          <Button size="sm" color="success">
+          <Button
+            size="sm"
+            color="success"
+            onClick={e => {
+              e.preventDefault();
+              props.rollDie();
+            }}
+          >
             Roll Dice
           </Button>
           <div>
             <ButtonGroup>
-              <Button size="sm" outline color="primary">
+              <Button
+                size="sm"
+                outline
+                color="primary"
+                onClick={() => props.joinGame()}
+              >
                 Join
               </Button>
-              <Button size="sm" outline color="danger">
+              <Button
+                size="sm"
+                outline
+                color="danger"
+                onClick={() => props.leaveGame()}
+              >
                 Exit
               </Button>
             </ButtonGroup>
@@ -114,4 +131,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { movePlayer })(Controls);
+export default connect(mapStateToProps, {
+  movePlayer,
+  rollDie,
+  joinGame,
+  leaveGame
+})(Controls);
