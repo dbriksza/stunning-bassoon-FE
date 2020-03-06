@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getGame } from "../store/actions/gameActions";
 import Board from "./Gameboard/Board";
 import Players from "./Playerboard/Players";
+import Controls from "./Controls/Controls";
 import styled from "styled-components";
 import backgroundImg from "../assets/background-image.jpg";
 
@@ -25,7 +26,7 @@ function Game(props) {
         <div className="game">
           <Players />
           <Board blueprint={props.game.board} />
-          {/* <Controls /> */}
+          <Controls />
         </div>
       </StyledDiv>
     )
@@ -58,27 +59,6 @@ const StyledDiv = styled.div`
     div:last-child {
       display: flex;
     }
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.5rem;
-  }
-  button:nth-of-type(1) {
-    margin: 0 auto;
-    width: 60%;
-  }
-   p {
-    flex: 2;
-    margin: 0;
-    min-width: 50%;
-    padding: 6px 0;
-    
-  }
-  .btn.btn-link {
-    flex: 1;
-    padding: 6px 0;
   }
 `;
 
