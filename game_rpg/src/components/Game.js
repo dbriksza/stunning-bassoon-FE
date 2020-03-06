@@ -1,5 +1,4 @@
-import React, { useEffect} from 'react';
-// redux
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart } from "../store/actions/gameActions";
 // pusher
@@ -65,13 +64,11 @@ function Game(props) {
   }, [getGame, pushPlayerChange, pushPlayerStart, pushBoardStart]);
 
   if (props.game.isLoading) {
-    return(
-      <h2>Loading the game...</h2>
-    )
+    return <h2>Loading the game...</h2>;
   }
 
-  if (props.game.isSuccessful){
-    return(
+  if (props.game.isSuccessful) {
+    return (
       <StyledDiv>
         <div className="game">
           <Players playerData={props.game.playerData} />
@@ -79,12 +76,9 @@ function Game(props) {
           <Controls />
         </div>
       </StyledDiv>
-    )
-
-  }
-
-  else {
-    return(<p>ERROR</p>)
+    );
+  } else {
+    return <p>ERROR</p>;
   }
 }
 
@@ -119,8 +113,8 @@ const mapStateToProps = state => {
       isError: state.game.isError,
       errorMessage: state.game.errorMessage
     }
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,

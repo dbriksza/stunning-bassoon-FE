@@ -1,4 +1,4 @@
-import * as types from '../actions/gameActions';
+import * as types from "../actions/gameActions";
 
 // Shape of initial server data:
 // player_dict = {
@@ -184,10 +184,16 @@ function gameReducer(state = initialState, action) {
         isSuccessful: false,
         isError: true,
         errorMessage: action.payload
-      }
+      };
+    case types.MOVE_PLAYER:
+      return {
+        ...state,
+        board: state.board,
+        playerPosition: action.playerPosition
+      };
     default:
       return state;
   }
 }
 
-export default gameReducer
+export default gameReducer;
