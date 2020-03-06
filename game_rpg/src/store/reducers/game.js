@@ -185,12 +185,6 @@ function gameReducer(state = initialState, action) {
         isError: true,
         errorMessage: action.payload
       };
-    case types.MOVE_PLAYER:
-      return {
-        ...state,
-        board: state.board,
-        playerPosition: action.playerPosition
-      };
     default:
       return state;
   }

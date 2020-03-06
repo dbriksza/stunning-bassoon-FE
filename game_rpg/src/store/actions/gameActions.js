@@ -28,16 +28,6 @@ export const BOARD_START_GAME = "BOARD_START_GAME"
 // GET_BOARD might deprecate
 export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
 
-
-export const MOVE_PLAYER = "MOVE_PLAYER";
-
-export const updateAction = (type, payload, roomTitle, playerPosition) => ({
-  type,
-  payload,
-  roomTitle,
-  playerPosition
-});
-
 export const getGame = () => dispatch => {
   dispatch({ type: START_REQUEST });
   axiosWithAuth()
@@ -47,21 +37,6 @@ export const getGame = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: GAME_FAIL, payload: err });
-    });
-};
-
-export const movePlayer = (board, playerPosition, direction) => dispatch => {
-  const reqBody = { direction: direction };
-  //need to be synced with backend
-  axiosWithAuth()
-    .post(`/api/adv/move`, reqBody)
-    .then(response => {
-      dispatch(
-        updateAction(MOVE_PLAYER, board, response.title, playerPosition)
-      );
-    })
-    .catch(err => {
-      console.log(err);
     });
 };
 
@@ -104,9 +79,10 @@ export const rollDie = () => dispatch => {
 };
 
 export const movePlayer = direction => dispatch => {
+  const reqBody = { direction: direction };
   dispatch({ type: START_REQUEST });
   axiosWithAuth()
-    .post(`/roll`, {direction: direction})
+    .post(`/move`, reqBody)
     .then(res => {
       dispatch({ type: MOVE_PLAYER_SUCCESS, payload: res.data });
     })
@@ -122,8 +98,6 @@ export const pushPlayerChange = (data) => dispatch => {
 export const pushBoardChange = (data) => dispatch => {
   dispatch({ type: PUSH_BOARD_CHANGE, paylod: data })
 }
-
-
 
 // START ACTIONS
 // http
