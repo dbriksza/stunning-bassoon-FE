@@ -10,11 +10,14 @@ export default function Room(props) {
     (value === 0 ? " obstacle" : "")
 
   if(room){
+    console.log(room.players)
     return(
       <StyledDiv>
         <div className={className}>
           {room ? room.point_value : null}  
         </div>
+        {room.players.length 
+          ? <div className={`player p0`} /> : null}
       </StyledDiv>
     )
   } else {
@@ -29,6 +32,8 @@ export default function Room(props) {
 }
 
 const StyledDiv = styled.div`
+  position: relative;
+
   .cell {
     background: #FCFAF9;
     border: 1px solid rgb(229, 72, 72);;
@@ -53,7 +58,27 @@ const StyledDiv = styled.div`
 
   .player {
     position: absolute;
-    color: red;
+    top: 5px;
+    left: 5px;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
     font-weight: bold;
+  }
+
+  .p0 {
+    background-color: red;
+  }
+
+  .p1 {
+    background-color: blue;
+  }
+
+  .p3 {
+    background-color: green;
+  }
+
+  .p4 {
+    background-color: purple;
   }
 `;
