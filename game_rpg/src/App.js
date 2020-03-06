@@ -1,27 +1,13 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import styled from "styled-components";
 
-// pusher
-import Pusher from 'pusher-js';
-
-// app
-
+// page components for each route
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import Game from "./components/Game";
-// import "./App.scss";
 
-const pusher = new Pusher('0805c1e228898d83231c', {
-  cluster: 'us2',
-  forceTLS: true
-});
-
-const channel = pusher.subscribe('game-channel');
-
-channel.bind('update-world', function(data) {
-  alert(JSON.stringify(data));
-});
+// styles
+import styled from "styled-components";
 
 function App() {
   return (
