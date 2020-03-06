@@ -6,23 +6,22 @@ export const GAME_FAIL = "GAME_ERROR";
 
 // PLAYER ACTION TYPES
 // http
-export const JOIN_GAME_SUCCESS = "JOIN_GAME_SUCCESS"
-export const LEAVE_GAME_SUCCESS = "LEAVE_GAME_SUCCESS"
-export const ROLL_DIE_SUCCESS = "ROLL_DIE_SUCCESS"
-export const MOVE_PLAYER_SUCCESS = "MOVE_PLAYER_SUCCESS"
+export const JOIN_GAME_SUCCESS = "JOIN_GAME_SUCCESS";
+export const LEAVE_GAME_SUCCESS = "LEAVE_GAME_SUCCESS";
+export const ROLL_DIE_SUCCESS = "ROLL_DIE_SUCCESS";
+export const MOVE_PLAYER_SUCCESS = "MOVE_PLAYER_SUCCESS";
 //pusher
-export const PUSH_PLAYER_CHANGE = "PUSH_PLAYER_CHANGE"
-export const PUSH_BOARD_CHANGE = "PUSH_BOARD_CHANGE"
+export const PUSH_PLAYER_CHANGE = "PUSH_PLAYER_CHANGE";
+export const PUSH_BOARD_CHANGE = "PUSH_BOARD_CHANGE";
 
 // START GAME ACTION TYPES
 // http
-export const START_GAME_SUCCESS = "START_GAME_SUCCESS"
+export const START_GAME_SUCCESS = "START_GAME_SUCCESS";
 // pusher
-export const PLAYER_START_GAME = "PLAYER_START_GAME"
-export const BOARD_START_GAME = "BOARD_START_GAME"
+export const PLAYER_START_GAME = "PLAYER_START_GAME";
+export const BOARD_START_GAME = "BOARD_START_GAME";
 
 // END GAME ACTION TYPES
-
 
 // http requests
 // GET_BOARD might deprecate
@@ -47,10 +46,11 @@ export const joinGame = () => dispatch => {
   axiosWithAuth()
     .get(`/join`)
     .then(res => {
+      console.log(res.data);
       dispatch({ type: JOIN_GAME_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      dispatch({ type: GAME_FAIL, payload: err })
+      dispatch({ type: GAME_FAIL, payload: err });
     });
 };
 
@@ -62,7 +62,7 @@ export const leaveGame = () => dispatch => {
       dispatch({ type: LEAVE_GAME_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      dispatch({ type: GAME_FAIL, payload: err })
+      dispatch({ type: GAME_FAIL, payload: err });
     });
 };
 
@@ -74,7 +74,7 @@ export const rollDie = () => dispatch => {
       dispatch({ type: ROLL_DIE_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      dispatch({ type: GAME_FAIL, payload: err })
+      dispatch({ type: GAME_FAIL, payload: err });
     });
 };
 
@@ -87,17 +87,17 @@ export const movePlayer = direction => dispatch => {
       dispatch({ type: MOVE_PLAYER_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      dispatch({ type: GAME_FAIL, payload: err })
+      dispatch({ type: GAME_FAIL, payload: err });
     });
 };
 // pusher player channel has one generic action for all changes (join, leave, move, score)
-export const pushPlayerChange = (data) => dispatch => {
+export const pushPlayerChange = data => dispatch => {
   dispatch({ type: PUSH_PLAYER_CHANGE, payload: data });
 };
 // pusher board channel for updates to board when player moves or takes points
-export const pushBoardChange = (data) => dispatch => {
-  dispatch({ type: PUSH_BOARD_CHANGE, paylod: data })
-}
+export const pushBoardChange = data => dispatch => {
+  dispatch({ type: PUSH_BOARD_CHANGE, paylod: data });
+};
 
 // START ACTIONS
 // http
@@ -109,14 +109,14 @@ export const startGame = () => dispatch => {
       dispatch({ type: START_GAME_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      dispatch({ type: GAME_FAIL, payload: err })
+      dispatch({ type: GAME_FAIL, payload: err });
     });
 };
 // pusher player channel
-export const pushPlayerStart = (data) => dispatch => {
-  dispatch({ type: PLAYER_START_GAME, payload: data })
-}
+export const pushPlayerStart = data => dispatch => {
+  dispatch({ type: PLAYER_START_GAME, payload: data });
+};
 // pusher board channel
-export const pushBoardStart = (data) => dispatch => {
-  dispatch({ type: BOARD_START_GAME, payload: data })
-}
+export const pushBoardStart = data => dispatch => {
+  dispatch({ type: BOARD_START_GAME, payload: data });
+};

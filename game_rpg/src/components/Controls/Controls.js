@@ -12,30 +12,47 @@ import {
 } from "../../store/actions/gameActions";
 
 const Controls = props => {
+  console.log(props.currentPlayer, props.username);
   return (
     <StyledControls>
       <p>Controls</p>
       <section>
         <div className="direction-container">
           <div>
-            <Button onClick={() => props.movePlayer("n")} color="secondary">
+            <Button
+              disabled={!props.currentPlayer == props.username}
+              onClick={() => props.movePlayer("n")}
+              color="secondary"
+            >
               N
             </Button>
           </div>
           <div className="west-east">
             <div>
-              <Button onClick={() => props.movePlayer("w")} color="secondary">
+              <Button
+                disabled={!props.currentPlayer == props.username}
+                onClick={() => props.movePlayer("w")}
+                color="secondary"
+              >
                 W
               </Button>
             </div>
             <div>
-              <Button onClick={() => props.movePlayer("e")} color="secondary">
+              <Button
+                disabled={!props.currentPlayer == props.username}
+                onClick={() => props.movePlayer("e")}
+                color="secondary"
+              >
                 E
               </Button>
             </div>
           </div>
           <div>
-            <Button onClick={() => props.movePlayer("s")} color="secondary">
+            <Button
+              disabled={!props.currentPlayer == props.username}
+              onClick={() => props.movePlayer("s")}
+              color="secondary"
+            >
               S
             </Button>
           </div>
@@ -44,6 +61,7 @@ const Controls = props => {
           <Button
             size="sm"
             color="success"
+            disabled={!props.currentPlayer == props.username}
             onClick={e => {
               e.preventDefault();
               props.rollDie();
@@ -127,7 +145,9 @@ const StyledControls = styled.div`
 
 const mapStateToProps = state => {
   return {
-    board: state.game.board
+    board: state.game.board,
+    currentPlayer: state.game.playerData.current_player,
+    username: state.game.username
   };
 };
 
