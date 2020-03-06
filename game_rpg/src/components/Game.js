@@ -1,7 +1,7 @@
 import React, { useEffect} from 'react';
 // redux
 import { connect } from "react-redux";
-import { getGame } from "../store/actions/gameActions";
+import { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart } from "../store/actions/gameActions";
 // pusher
 import Pusher from "pusher-js";
 // components
@@ -17,48 +17,51 @@ const pusher = new Pusher('0805c1e228898d83231c', {
   cluster: 'us2',
   forceTLS: true
 });
-
-// player pusher updates
 const playerChannel = pusher.subscribe('player-channel');
-
-playerChannel.bind('player-joined', function(data) {
-  alert(JSON.stringify(data));
-});
-
-playerChannel.bind('player-left', function(data) {
-  alert(JSON.stringify(data));
-});
-
-playerChannel.bind('start-game', function(data) {
-  alert(JSON.stringify(data));
-});
-
-playerChannel.bind('update-world', function(data) {
-  alert(JSON.stringify(data));
-});
-
-// board pusher updates
 const boardChannel = pusher.subscribe('board-channel');
-
-boardChannel.bind('start-game', function(data) {
-  alert(JSON.stringify(data));
-});
-
-boardChannel.bind('update-world', function(data) {
-  alert(JSON.stringify(data));
-});
-
-boardChannel.bind('end-game', function(data) {
-  alert(JSON.stringify(data));
-});
 
 // Game component
 function Game(props) {
-  const { getGame } = props;
+  const { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart } = props;
 
   useEffect(() => {
-    getGame()
-  }, [getGame]);
+    getGame();
+    // player pusher updates
+    playerChannel.bind('player-joined', function(data) {
+      pushPlayerChange(data);
+      // alert(JSON.stringify(data));
+    });
+    
+    playerChannel.bind('player-left', function(data) {
+      pushPlayerChange(data);
+      // alert(JSON.stringify(data));
+    });
+    
+    playerChannel.bind('start-game', function(data) {
+      pushPlayerStart(data);
+      // alert(JSON.stringify(data));
+    });
+    
+    playerChannel.bind('update-world', function(data) {
+      alert(JSON.stringify(data));
+    });
+    
+    // board pusher updates
+    
+    boardChannel.bind('start-game', function(data) {
+      pushBoardStart(data);
+      alert(JSON.stringify(data));
+    });
+    
+    boardChannel.bind('update-world', function(data) {
+      alert(JSON.stringify(data));
+    });
+    
+    boardChannel.bind('end-game', function(data) {
+      alert(JSON.stringify(data));
+    });
+
+  }, [getGame, pushPlayerChange, pushPlayerStart, pushBoardStart]);
 
   if (props.game.isLoading) {
     return(
@@ -120,5 +123,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getGame }
+  { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart }
 )(Game)
