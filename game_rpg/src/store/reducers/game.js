@@ -141,7 +141,9 @@ function gameReducer(state = initialState, action) {
         }
       }
     
-    // Roll die endpoint causes pusher update to players_channel and triggers PLAYER_UPDATE action as well
+    // GAME UPDATE ACTION HANDLERS
+    // http roll die
+    // roll die update causes pusher update to players_channel
     case(types.ROLL_DIE_SUCCESS):
       return {
         ...state,
@@ -150,9 +152,8 @@ function gameReducer(state = initialState, action) {
         isError: false,
         errorMessage: null
       }
-    
+    // http move player
     // Move player endpoint causes pusher update to players_channel and board_channel
-    // triggers PLAYER_UPDATE action and BOARD_UPDATE action as well
     case(types.MOVE_PLAYER_SUCCESS):
       return {
         ...state,
@@ -161,22 +162,18 @@ function gameReducer(state = initialState, action) {
         isError: false,
         errorMessage: null
       }
-    
-      // Roll die endpoint causes pusher update to players_channel
-      // case(types.ROLL_DIE_SUCCESS):
-      //   return {
-      //     ...state,
-      //     playerData: {
-      //       ...state.playerData,
-      //       current_player: action.payload.player_dict.current_player,
-      //       players: action.payload.player_dict.players
-      //     },
-      //     isLoading: false,
-      //     isSuccessful: true,
-      //     isError: false,
-      //     errorMessage: null
-      //   }
-        
+    // pusher update gameboard
+    case(types.PUSH_BOARD_CHANGE):
+      return {
+        ...state,
+        gameData: {
+          ...state.gameData,
+          board: action.payload
+        }
+      }
+
+
+    // generic http failure handler for error message  
     case (types.GAME_FAIL):
       return {
         ...state,
