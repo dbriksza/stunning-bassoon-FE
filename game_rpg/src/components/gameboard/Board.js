@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 
 export default function Board(props) {
-  const {blueprint} = props;
+  const {blueprint} = props.gameData;
   return(
     <StyledDiv>
       {/* Map over blueprint and render cells */}

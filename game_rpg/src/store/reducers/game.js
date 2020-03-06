@@ -43,11 +43,11 @@ import * as types from '../actions/gameActions';
 //   }
 
 const initialState = {
-  board: {
+  gameData: {
     blueprint: null,
-    rooms: {}
+    board: []
   },
-  players: [],
+  playerData: {},
   isLoading: false,
   isSuccessful: false,
   isError: false,
@@ -57,32 +57,146 @@ const initialState = {
 
 
 function gameReducer(state = initialState, action) {
-    switch(action.type) {
-        case (types.GET_BOARD_START):
-            return {
-              isLoading: true,
-              isSuccessful: false,
-              isError: false,
-              errorMessage: null
-            }
-        case (types.GET_BOARD_SUCCESS):
-            return {
-              board: action.payload.blueprint,
-              isLoading: false,
-              isSuccessful: true,
-              isError: false,
-              errorMessage: null
-            }
-        case (types.GAME_FAIL):
-            return {
-              isLoading: false,
-              isSuccessful: false,
-              isError: true,
-              errorMessage: action.payload
-            }
-        default:
-            return state;
-    }
+  switch(action.type) {
+    // generic HTTP request start handlers
+    case (types.START_REQUEST):
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+        isError: false,
+        errorMessage: null
+      }
+
+    // Get blueprint (may be deprecated)
+    case (types.GET_BOARD_SUCCESS):
+      return {
+        ...state,
+        gameData: {
+          ...state.board,
+          blueprint: action.payload.blueprint
+        },
+        isLoading: false,
+        isSuccessful: true,
+        isError: false,
+        errorMessage: null
+      }
+
+    // PLAYER JOIN/LEAVE ACTION HANDLERS
+    // join http handler
+    case (types.JOIN_GAME_SUCCESS):
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        isError: false,
+        errorMessage: null
+      }
+    // leave endpoint handler 
+    case(types.LEAVE_GAME_SUCCESS):
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        isError: false,
+        errorMessage: null
+      }
+    // pusher handler for player array updates
+    case (types.PUSH_PLAYER_CHANGE):
+      return {
+        ...state,
+        playerData: {
+          ...state.playerData,
+          players: action.payload.players
+        }
+      }
+    
+    // START GAME ACTION HANDLERS
+    // http start game endpoint handlers
+    case(types.START_GAME_SUCCESS):
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        isError: false,
+        errorMessage: null
+      }
+    // pusher player channel start game
+    case(types.PLAYER_START_GAME):
+      return {
+        ...state,
+        playerData: {
+          ...state.playerData,
+          current_player: action.payload.current_player,
+          players: action.payload.players
+        }
+      }
+    // pusher board channel start game
+    case(types.BOARD_START_GAME):
+      return {
+        ...state,
+        gameData: {
+          ...state.gameData,
+          board: action.payload.board
+        }
+      }
+    
+    // Roll die endpoint causes pusher update to players_channel and triggers PLAYER_UPDATE action as well
+    case(types.ROLL_DIE_SUCCESS):
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        isError: false,
+        errorMessage: null
+      }
+    
+    // Move player endpoint causes pusher update to players_channel and board_channel
+    // triggers PLAYER_UPDATE action and BOARD_UPDATE action as well
+    case(types.MOVE_PLAYER_SUCCESS):
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        isError: false,
+        errorMessage: null
+      }
+
+    // updates from player_updates pusher channel
+    case(types.BOARD_UPDATE):
+      return {
+        boardData: {
+          ...state.boardData,
+          board: action.payload.board
+        }
+      }
+    
+      // Roll die endpoint causes pusher update to players_channel
+      // case(types.ROLL_DIE_SUCCESS):
+      //   return {
+      //     ...state,
+      //     playerData: {
+      //       ...state.playerData,
+      //       current_player: action.payload.player_dict.current_player,
+      //       players: action.payload.player_dict.players
+      //     },
+      //     isLoading: false,
+      //     isSuccessful: true,
+      //     isError: false,
+      //     errorMessage: null
+      //   }
+        
+    case (types.GAME_FAIL):
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        isError: true,
+        errorMessage: action.payload
+      }
+    default:
+      return state;
+  }
 }
 
 export default gameReducer
