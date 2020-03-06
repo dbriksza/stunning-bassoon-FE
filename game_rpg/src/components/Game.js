@@ -1,18 +1,67 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getGame } from "../store/actions/gameActions";
+import { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart } from "../store/actions/gameActions";
+// pusher
+import Pusher from "pusher-js";
+// components
 import Board from "./Gameboard/Board";
 import Players from "./Playerboard/Players";
 import Controls from "./Controls/Controls";
+// styles
 import styled from "styled-components";
 import backgroundImg from "../assets/background-image.jpg";
 
+// initialize pusher
+const pusher = new Pusher('0805c1e228898d83231c', {
+  cluster: 'us2',
+  forceTLS: true
+});
+const playerChannel = pusher.subscribe('player-channel');
+const boardChannel = pusher.subscribe('board-channel');
+
+// Game component
 function Game(props) {
-  const { getGame } = props;
+  const { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart } = props;
 
   useEffect(() => {
     getGame();
-  }, [getGame]);
+    // player pusher updates
+    playerChannel.bind('player-joined', function(data) {
+      pushPlayerChange(data);
+      // alert(JSON.stringify(data));
+    });
+    
+    playerChannel.bind('player-left', function(data) {
+      pushPlayerChange(data);
+      // alert(JSON.stringify(data));
+    });
+    
+    playerChannel.bind('start-game', function(data) {
+      pushPlayerStart(data);
+      // alert(JSON.stringify(data));
+    });
+    
+    playerChannel.bind('update-world', function(data) {
+      pushPlayerChange(data);
+      alert(JSON.stringify(data));
+    });
+    
+    // board pusher updates
+    
+    boardChannel.bind('start-game', function(data) {
+      pushBoardStart(data);
+      // alert(JSON.stringify(data));
+    });
+    
+    boardChannel.bind('update-world', function(data) {
+      alert(JSON.stringify(data));
+    });
+    
+    boardChannel.bind('end-game', function(data) {
+      alert(JSON.stringify(data));
+    });
+
+  }, [getGame, pushPlayerChange, pushPlayerStart, pushBoardStart]);
 
   if (props.game.isLoading) {
     return <h2>Loading the game...</h2>;
@@ -22,8 +71,8 @@ function Game(props) {
     return (
       <StyledDiv>
         <div className="game">
-          <Players />
-          <Board blueprint={props.game.board} />
+          <Players playerData={props.game.playerData} />
+          <Board gameData={props.game.gameData} />
           <Controls />
         </div>
       </StyledDiv>
@@ -56,6 +105,8 @@ const StyledDiv = styled.div`
 const mapStateToProps = state => {
   return {
     game: {
+      gameData: state.game.gameData,
+      playerData: state.game.playerData,
       board: state.game.board,
       isSuccessful: state.game.isSuccessful,
       isLoading: state.game.isLoading,
@@ -65,4 +116,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getGame })(Game);
+export default connect(
+  mapStateToProps,
+  { getGame, pushPlayerChange, pushPlayerStart, pushBoardStart }
+)(Game)
