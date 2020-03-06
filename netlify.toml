@@ -1,4 +1,4 @@
 [build]
 base = "game_rpg/"
-publish = "build/"
+publish = "game_rpg/build/"
 command = "npm build"
