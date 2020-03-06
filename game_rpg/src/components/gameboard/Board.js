@@ -11,7 +11,7 @@ export default function Board(props) {
       {blueprint.map((maprow, index) => {
         let rowIndex = index
         return (
-          <div>
+          <div className="row">
             {maprow.map((mapRoom, index) => {
               return (
                 <Room key={`${rowIndex}-${index}`} value={mapRoom} />
@@ -28,4 +28,9 @@ const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
+  padding: 10px;
+
+  .row {
+    display: flex;
+  }
 `;

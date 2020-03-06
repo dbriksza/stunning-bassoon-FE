@@ -55,10 +55,6 @@ const StyledDiv = styled.div`
     background: rgb(229, 72, 72);
     min-width: 40%;
     padding: 1rem;
-    
-    div:last-child {
-      display: flex;
-    }
   }
 `;
 
