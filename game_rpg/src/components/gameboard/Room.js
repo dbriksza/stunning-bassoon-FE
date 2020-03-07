@@ -14,7 +14,7 @@ export default function Room(props) {
   if(room){
     if(room.players.length){
       playerColor = {
-        color: room.players[0].color
+        backgroundColor: room.players[0].color
       };
     }
     return(
@@ -23,7 +23,7 @@ export default function Room(props) {
           {room ? room.point_value : null}  
         </div>
         {room.players.length 
-          ? <div style={playerColor} /> : null}
+          ? <div style={playerColor} className="player" /> : null}
       </StyledDiv>
     )
   } else {

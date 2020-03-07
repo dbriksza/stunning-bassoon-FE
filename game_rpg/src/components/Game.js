@@ -55,7 +55,7 @@ function Game(props) {
 
     playerChannel.bind("update-world", function(data) {
       pushPlayerChange(data);
-      alert(JSON.stringify(data));
+      // alert(JSON.stringify(data));
     });
 
     // board pusher updates
@@ -67,7 +67,7 @@ function Game(props) {
 
     boardChannel.bind("update-world", function(data) {
       pushBoardChange(data);
-      alert(JSON.stringify(data));
+      // alert(JSON.stringify(data));
     });
 
     boardChannel.bind("end-game", function(data) {

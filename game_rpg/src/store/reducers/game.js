@@ -72,7 +72,7 @@ function gameReducer(state = initialState, action) {
       return {
         ...state,
         gameData: {
-          ...state.board,
+          board: action.payload.board,
           blueprint: action.payload.blueprint
         },
         isLoading: false,
