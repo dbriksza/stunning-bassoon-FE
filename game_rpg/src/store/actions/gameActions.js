@@ -96,7 +96,7 @@ export const pushPlayerChange = data => dispatch => {
 };
 // pusher board channel for updates to board when player moves or takes points
 export const pushBoardChange = data => dispatch => {
-  dispatch({ type: PUSH_BOARD_CHANGE, paylod: data });
+  dispatch({ type: PUSH_BOARD_CHANGE, payload: data });
 };
 
 // START ACTIONS
