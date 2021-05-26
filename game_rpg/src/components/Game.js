@@ -10,9 +10,9 @@ import {
 // pusher
 import Pusher from "pusher-js";
 // components
-import Board from "./Gameboard/Board";
-import Players from "./Playerboard/Players";
-import Controls from "./Controls/Controls";
+import Board from "./Gameboard/Board.js";
+import Players from "./Playerboard/Players.js";
+import Controls from "./Controls/Controls.js";
 // styles
 import styled from "styled-components";
 import backgroundImg from "../assets/background-image.jpg";
